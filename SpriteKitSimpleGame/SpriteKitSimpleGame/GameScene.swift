@@ -55,6 +55,44 @@ class GameScene: SKScene {
         runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(addMonster), SKAction.waitForDuration(1.0)])))
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        // choose one of the touches to work with
+        guard let touch = touches.first else {
+            return
+        }
+        let touchLocation = touch.locationInNode(self)
+        
+        // set up the initial location of the projectile
+        let projectile = SKSpriteNode(imageNamed: "projectile")
+        projectile.position = player.position
+        
+        // determine offset of location to projectile
+        let offset = touchLocation - projectile.position
+        
+        // quit if you are shooting down or backwards
+        if offset.x < 0 {
+            return
+        }
+        
+        addChild(projectile)
+        
+        // get the direction of where to shoot
+        let direction = offset.normalized()
+        
+        // shoot to offscreen
+        let shootAmount = direction * 1000
+        
+        // add the shoot amount to the current position
+        let realDestination = shootAmount + projectile.position
+        
+        // create the actions
+        let actionMove = SKAction.moveTo(realDestination, duration: 2.0)
+        let actionMoveDone = SKAction.removeFromParent()
+        projectile.runAction(SKAction.sequence([actionMove, actionMoveDone]))
+        
+        
+    }
+    
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }

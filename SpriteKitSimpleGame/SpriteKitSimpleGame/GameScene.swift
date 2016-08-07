@@ -41,7 +41,14 @@ extension CGPoint {
     
 }
 
-class GameScene: SKScene {
+struct PhysicsCategory {
+    static let None: UInt32 = 0
+    static let All: UInt32 = UInt32.max
+    static let Monster: UInt32 = 0b1
+    static let Projectile: UInt32 = 0b10
+}
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     // 1
     let player = SKSpriteNode(imageNamed: "player")
     
@@ -52,10 +59,15 @@ class GameScene: SKScene {
         //
         addChild(player)
         
+        physicsWorld.gravity = CGVectorMake(0, 0)
+        physicsWorld.contactDelegate = self
+        
         runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(addMonster), SKAction.waitForDuration(1.0)])))
+        
+        
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // choose one of the touches to work with
         guard let touch = touches.first else {
             return
@@ -65,6 +77,13 @@ class GameScene: SKScene {
         // set up the initial location of the projectile
         let projectile = SKSpriteNode(imageNamed: "projectile")
         projectile.position = player.position
+        
+        projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width / 2)
+        projectile.physicsBody?.dynamic = true
+        projectile.physicsBody?.categoryBitMask = PhysicsCategory.Projectile
+        projectile.physicsBody?.contactTestBitMask = PhysicsCategory.Monster
+        projectile.physicsBody?.collisionBitMask = PhysicsCategory.None
+        projectile.physicsBody?.usesPreciseCollisionDetection = true
         
         // determine offset of location to projectile
         let offset = touchLocation - projectile.position
@@ -110,6 +129,12 @@ class GameScene: SKScene {
         
         // add the monster to the scene
         addChild(monster)
+        
+        monster.physicsBody = SKPhysicsBody(rectangleOfSize: monster.size)
+        monster.physicsBody?.dynamic = true
+        monster.physicsBody?.categoryBitMask = PhysicsCategory.Monster
+        monster.physicsBody?.contactTestBitMask = PhysicsCategory.Projectile
+        monster.physicsBody?.collisionBitMask = PhysicsCategory.None
         
         // determine the speed of the monster
         let actualDuration = random(min: 2.0, max: 4.0)

@@ -51,6 +51,7 @@ struct PhysicsCategory {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     // 1
     let player = SKSpriteNode(imageNamed: "player")
+    var monstersDestroyed = 0
     
     override func didMoveToView(view: SKView) {
         // 2
@@ -64,10 +65,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         runAction(SKAction.repeatActionForever(SKAction.sequence([SKAction.runBlock(addMonster), SKAction.waitForDuration(1.0)])))
         
+        // adding the sound
+        let backgroundMusic = SKAudioNode(fileNamed: "background-music-aac.caf")
+        backgroundMusic.autoplayLooped = true
+        addChild(backgroundMusic)
         
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        runAction(SKAction.playSoundFileNamed("pew-pew-lei.caf", waitForCompletion: false))
         // choose one of the touches to work with
         guard let touch = touches.first else {
             return
@@ -142,7 +148,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //  create the actions
         let actionMove = SKAction.moveTo(CGPoint(x: -monster.size.width / 2, y: actualY), duration: NSTimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
-        monster.runAction(SKAction.sequence([actionMove, actionMoveDone]))
+        let looseAction = SKAction.runBlock() {
+            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: false)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        }
+        monster.runAction(SKAction.sequence([actionMove, looseAction, actionMoveDone]))
     }
     
     // called when projectile collides with the monster
@@ -150,6 +161,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print("hit")
         projectile.removeFromParent()
         monster.removeFromParent()
+        
+        if monstersDestroyed > 30 {
+            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: true)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        }
     }
     
     // contact delegate

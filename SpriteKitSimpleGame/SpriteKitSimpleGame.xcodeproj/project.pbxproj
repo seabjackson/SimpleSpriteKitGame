@@ -13,6 +13,7 @@
 		2A2FC6D91D545E770066D568 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A2FC6D71D545E770066D568 /* Main.storyboard */; };
 		2A2FC6DB1D545E770066D568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A2FC6DA1D545E770066D568 /* Assets.xcassets */; };
 		2A2FC6DE1D545E770066D568 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A2FC6DC1D545E770066D568 /* LaunchScreen.storyboard */; };
+		2A9C73111D580D2D00207627 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9C73101D580D2D00207627 /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,9 @@
 		2A2FC6DA1D545E770066D568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A2FC6DD1D545E770066D568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A2FC6DF1D545E770066D568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A9C730E1D57DDBA00207627 /* background-music-aac.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "background-music-aac.caf"; sourceTree = "<group>"; };
+		2A9C730F1D57DDBA00207627 /* pew-pew-lei.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pew-pew-lei.caf"; sourceTree = "<group>"; };
+		2A9C73101D580D2D00207627 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +46,8 @@
 			children = (
 				2A2FC6CE1D545E770066D568 /* SpriteKitSimpleGame */,
 				2A2FC6CD1D545E770066D568 /* Products */,
+				2A9C730E1D57DDBA00207627 /* background-music-aac.caf */,
+				2A9C730F1D57DDBA00207627 /* pew-pew-lei.caf */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +64,7 @@
 			children = (
 				2A2FC6CF1D545E770066D568 /* AppDelegate.swift */,
 				2A2FC6D31D545E770066D568 /* GameScene.swift */,
+				2A9C73101D580D2D00207627 /* GameOverScene.swift */,
 				2A2FC6D51D545E770066D568 /* GameViewController.swift */,
 				2A2FC6D71D545E770066D568 /* Main.storyboard */,
 				2A2FC6DA1D545E770066D568 /* Assets.xcassets */,
@@ -141,6 +148,7 @@
 			files = (
 				2A2FC6D41D545E770066D568 /* GameScene.swift in Sources */,
 				2A2FC6D61D545E770066D568 /* GameViewController.swift in Sources */,
+				2A9C73111D580D2D00207627 /* GameOverScene.swift in Sources */,
 				2A2FC6D01D545E770066D568 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,6 +299,7 @@
 				2A2FC6E41D545E770066D568 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
